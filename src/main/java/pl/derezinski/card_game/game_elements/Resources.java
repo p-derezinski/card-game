@@ -17,6 +17,18 @@ public class Resources extends Card {
         this.color = color;
     }
 
+    public void increasePlayerColorResources(Player player) {
+        if (color.equals(Color.BROWN)) {
+            player.setBrownResources(player.getBrownResources() + 1);
+        } else if (color.equals(Color.ORANGE)) {
+            player.setOrangeResources(player.getOrangeResources() + 1);
+        } else if (color.equals(Color.YELLOW)) {
+            player.setYellowResources(player.getYellowResources() + 1);
+        } else if (color.equals(Color.GREEN)) {
+            player.setGreenResources(player.getGreenResources() + 1);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

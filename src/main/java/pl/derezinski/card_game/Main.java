@@ -4,6 +4,8 @@ import pl.derezinski.card_game.game_elements.Color;
 import pl.derezinski.card_game.game_elements.Player;
 import pl.derezinski.card_game.game_elements.ResourcesBuilder;
 
+import java.util.Collections;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -46,7 +48,26 @@ public class Main {
                 .color(Color.GREEN)
                 .build());
 
+        // TODO - dodać kolejne karty
+
+        System.out.println("-----------------------\nCards before shuffle");
         player.getDeck().forEach(System.out::println);
+
+        // potasowanie talii
+        Collections.shuffle(player.getDeck());
+        System.out.println("-----------------------\nCards after shuffle");
+        player.getDeck().forEach(System.out::println);
+
+        // pobranie siedmiu kart do ręki gracza
+        for (int i = 0; i < 7; i++) {
+            player.getHand().add(player.getDeck().remove(0));
+        }
+        System.out.println("-----------------------\nCards in hand:");
+        player.getHand().forEach(System.out::println);
+
+        System.out.println("-----------------------\nCards in deck:");
+        player.getDeck().forEach(System.out::println);
+
     }
 
 }
