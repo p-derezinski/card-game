@@ -8,7 +8,7 @@ public abstract class CardWithResourcesCost extends Card{
     protected int orangeResourcesCost;
     protected int yellowResourcesCost;
     protected int greenResourcesCost;
-    protected int totalResourcesCost = brownResourcesCost + orangeResourcesCost + yellowResourcesCost + greenResourcesCost;
+    protected int totalResourcesCost;
 
     public int getBrownResourcesCost() {
         return brownResourcesCost;

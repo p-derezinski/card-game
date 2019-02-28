@@ -40,19 +40,24 @@ public class Spaceship extends CardWithResourcesCost {
 
     @Override
     public String toString() {
-        //TODO - dokończyć metodę, StringBuilder, koszt ma się wyświetlać tylko gdt jest większy od 0
-//        return "-> " + cardName + "\n" +
-//                "\ttype: Spaceship, color: " + color + "\n" +
-//                "\t" + cardDescription;
-        return "Spaceship{" +
-                "attackPower=" + attackPower +
-                ", defencePower=" + defencePower +
-                ", brownResourcesCost=" + brownResourcesCost +
-                ", orangeResourcesCost=" + orangeResourcesCost +
-                ", yellowResourcesCost=" + yellowResourcesCost +
-                ", greenResourcesCost=" + greenResourcesCost +
-                ", totalResourcesCost=" + totalResourcesCost +
-                ", cardDescription='" + cardDescription + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("-> ").append(cardName).append("\n");
+        sb.append("\ttype: Spaceship, ");
+        if (brownResourcesCost > 0) {
+            sb.append("BROWN resources cost: ").append(brownResourcesCost).append(", ");
+        }
+        if (orangeResourcesCost > 0) {
+            sb.append("ORANGE resources cost: ").append(orangeResourcesCost).append(", ");
+        }
+        if (yellowResourcesCost > 0) {
+            sb.append("YELLOW resources cost: ").append(yellowResourcesCost).append(", ");
+        }
+        if (greenResourcesCost > 0) {
+            sb.append("GREEN resources cost: ").append(greenResourcesCost).append(", ");
+        }
+        sb.append("total resources cost: ").append(totalResourcesCost).append("\n");
+        sb.append("\tattack/defence power: ").append(attackPower).append("/").append(defencePower).append("\n");
+        sb.append("\t").append(cardDescription);
+        return sb.toString();
     }
 }

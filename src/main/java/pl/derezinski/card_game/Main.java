@@ -1,8 +1,6 @@
 package pl.derezinski.card_game;
 
-import pl.derezinski.card_game.game_elements.Color;
-import pl.derezinski.card_game.game_elements.Player;
-import pl.derezinski.card_game.game_elements.ResourcesBuilder;
+import pl.derezinski.card_game.game_elements.*;
 
 import java.util.Collections;
 
@@ -46,6 +44,23 @@ public class Main {
         player.getDeck().add(new ResourcesBuilder()
                 .cardName("Training camp")
                 .color(Color.GREEN)
+                .build());
+
+        player.getDeck().add(new SpaceshipBuilder()
+                .cardName("Apollo")
+                .brownResourcesCost(1)
+                .totalResourcesCost(3)
+                .attackPower(2)
+                .defencePower(2)
+                .build());
+        player.getDeck().add(new SpaceshipBuilder()
+                .cardName("Enterprise")
+                .cardDescription("Awesome spaceship.")
+                .orangeResourcesCost(1)
+                .greenResourcesCost(1)
+                .totalResourcesCost(5)
+                .attackPower(3)
+                .defencePower(4)
                 .build());
 
         // TODO - dodać kolejne karty
