@@ -46,7 +46,7 @@ public class Resources extends Card {
     @Override
     public String toString() {
         return "-> " + cardName + "\n" +
-                "\ttype: Resources, color: " + color + "\n" +
+                "\ttype: RESOURCES, color: " + color + "\n" +
                 "\t" + cardDescription;
     }
 }

@@ -1,6 +1,8 @@
 package pl.derezinski.card_game;
 
 import pl.derezinski.card_game.game_elements.*;
+import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
+import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaceShipDefence;
 
 import java.util.Collections;
 
@@ -10,6 +12,40 @@ public class Main {
 
         Player player = new Player();
 
+        addCardsToThePlayersDeck(player);
+
+        System.out.println("-----------------------\nCards before shuffle");
+        player.getDeck().forEach(System.out::println);
+
+        // sprawdzenie nowych kart Technology
+        System.out.println("-----------------------\nTechnology cards");
+        Technology technology_1 = (Technology) player.getDeck().get(26);
+        technology_1.performAttack();
+        technology_1.performDefence();
+        technology_1.performAction();
+        Technology technology_2 = (Technology) player.getDeck().get(27);
+        technology_2.performAttack();
+        technology_2.performDefence();
+        technology_2.performAction();
+
+        // potasowanie talii
+        Collections.shuffle(player.getDeck());
+        System.out.println("-----------------------\nCards after shuffle");
+        player.getDeck().forEach(System.out::println);
+
+        // pobranie siedmiu kart do ręki gracza
+        for (int i = 0; i < 7; i++) {
+            player.getHand().add(player.getDeck().remove(0));
+        }
+        System.out.println("-----------------------\nCards in hand:");
+        player.getHand().forEach(System.out::println);
+
+        System.out.println("-----------------------\nCards in deck:");
+        player.getDeck().forEach(System.out::println);
+
+    }
+
+    private static void addCardsToThePlayersDeck(Player player) {
         player.getDeck().add(new ResourcesBuilder()
                 .cardName("Factory")
                 .cardDescription("Provides mass production of all necessary stuff.")
@@ -180,26 +216,22 @@ public class Main {
                 .defencePower(2)
                 .build());
 
+        player.getDeck().add(new TechnologyBuilder()
+                .cardName("Biological weapon")
+                .cardDescription("Your opponent loses 2 life points.")
+                .orangeResourcesCost(1)
+                .totalResourcesCost(1)
+                .attackBehaviour(new AttackOtherPlayer())
+                .build());
+        player.getDeck().add(new TechnologyBuilder()
+                .cardName("Spaceship's shield")
+                .cardDescription("The defence power of your spaceship is increased by 2 points.")
+                .greenResourcesCost(1)
+                .totalResourcesCost(1)
+                .defenceBehaviour(new DefenceIncreaceShipDefence())
+                .build());
+
         // TODO - dodać kolejne karty
-
-        System.out.println("-----------------------\nCards before shuffle");
-        player.getDeck().forEach(System.out::println);
-
-        // potasowanie talii
-        Collections.shuffle(player.getDeck());
-        System.out.println("-----------------------\nCards after shuffle");
-        player.getDeck().forEach(System.out::println);
-
-        // pobranie siedmiu kart do ręki gracza
-        for (int i = 0; i < 7; i++) {
-            player.getHand().add(player.getDeck().remove(0));
-        }
-        System.out.println("-----------------------\nCards in hand:");
-        player.getHand().forEach(System.out::println);
-
-        System.out.println("-----------------------\nCards in deck:");
-        player.getDeck().forEach(System.out::println);
-
     }
 
 }

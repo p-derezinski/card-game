@@ -42,7 +42,7 @@ public class Spaceship extends CardWithResourcesCost {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("-> ").append(cardName).append("\n");
-        sb.append("\ttype: Spaceship, ");
+        sb.append("\ttype: SPACESHIP, ");
         if (brownResourcesCost > 0) {
             sb.append("BROWN resources cost: ").append(brownResourcesCost).append(", ");
         }
