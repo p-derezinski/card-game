@@ -2,7 +2,7 @@ package pl.derezinski.card_game;
 
 import pl.derezinski.card_game.game_elements.*;
 import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
-import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaceShipDefence;
+import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaseShipDefence;
 
 import java.util.Collections;
 
@@ -17,16 +17,21 @@ public class Main {
         System.out.println("-----------------------\nCards before shuffle");
         player.getDeck().forEach(System.out::println);
 
-        // sprawdzenie nowych kart Technology
+        // sprawdzenie zachowania różnych kart
         System.out.println("-----------------------\nTechnology cards");
         Technology technology_1 = (Technology) player.getDeck().get(26);
+        System.out.println(technology_1);
         technology_1.performAttack();
         technology_1.performDefence();
         technology_1.performAction();
         Technology technology_2 = (Technology) player.getDeck().get(27);
+        System.out.println(technology_2);
         technology_2.performAttack();
         technology_2.performDefence();
         technology_2.performAction();
+        Spaceship spaceship_1 = (Spaceship) player.getDeck().get(25);
+        System.out.println(spaceship_1);
+        spaceship_1.performAttack();
 
         // potasowanie talii
         Collections.shuffle(player.getDeck());
@@ -221,14 +226,14 @@ public class Main {
                 .cardDescription("Your opponent loses 2 life points.")
                 .orangeResourcesCost(1)
                 .totalResourcesCost(1)
-                .attackBehaviour(new AttackOtherPlayer())
+                .attackBehaviour(new AttackOtherPlayer(2))
                 .build());
         player.getDeck().add(new TechnologyBuilder()
                 .cardName("Spaceship's shield")
                 .cardDescription("The defence power of your spaceship is increased by 2 points.")
                 .greenResourcesCost(1)
                 .totalResourcesCost(1)
-                .defenceBehaviour(new DefenceIncreaceShipDefence())
+                .defenceBehaviour(new DefenceIncreaseShipDefence())
                 .build());
 
         // TODO - dodać kolejne karty

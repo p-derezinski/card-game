@@ -6,9 +6,12 @@ import pl.derezinski.card_game.game_elements.behaviours.OtherBehaviour;
 
 public class Technology extends CardWithResourcesCost {
 
-    AttackBehaviour attackBehaviour;
-    DefenceBehaviour defenceBehaviour;
-    OtherBehaviour otherBehaviour;
+    private AttackBehaviour attackBehaviour;
+    private DefenceBehaviour defenceBehaviour;
+    private OtherBehaviour otherBehaviour;
+
+    Technology() {
+    }
 
     public void performAttack() {
         attackBehaviour.attack();

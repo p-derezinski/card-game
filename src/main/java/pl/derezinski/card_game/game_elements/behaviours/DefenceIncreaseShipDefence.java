@@ -1,6 +1,6 @@
 package pl.derezinski.card_game.game_elements.behaviours;
 
-public class DefenceIncreaceShipDefence implements DefenceBehaviour {
+public class DefenceIncreaseShipDefence implements DefenceBehaviour {
 
     @Override
     public void defence() {

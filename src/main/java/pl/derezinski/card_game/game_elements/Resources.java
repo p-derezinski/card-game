@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Resources extends Card {
 
+    private Color color;
+
     Resources() {
     }
-
-    private Color color;
 
     public Color getColor() {
         return color;

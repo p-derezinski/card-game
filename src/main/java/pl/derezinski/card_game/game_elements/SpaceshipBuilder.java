@@ -1,5 +1,8 @@
 package pl.derezinski.card_game.game_elements;
 
+import pl.derezinski.card_game.game_elements.behaviours.AttackBehaviour;
+import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
+
 import java.util.Optional;
 
 public class SpaceshipBuilder {
@@ -13,6 +16,7 @@ public class SpaceshipBuilder {
     private int totalResourcesCost;
     private int attackPower;
     private int defencePower;
+    private AttackBehaviour attackBehaviour;
 
     public SpaceshipBuilder cardName(String cardName) {
         this.cardName = cardName;
@@ -59,6 +63,11 @@ public class SpaceshipBuilder {
         return this;
     }
 
+    public SpaceshipBuilder attackBehaviour(AttackBehaviour attackBehaviour) {
+        this.attackBehaviour = attackBehaviour;
+        return this;
+    }
+
     public Spaceship build() {
         Spaceship spaceship = new Spaceship();
         spaceship.setCardName(cardName);
@@ -72,6 +81,9 @@ public class SpaceshipBuilder {
         spaceship.setTotalResourcesCost(totalResourcesCost);
         spaceship.setAttackPower(attackPower);
         spaceship.setDefencePower(defencePower);
+        spaceship.setAttackBehaviour(Optional
+                .ofNullable(attackBehaviour)
+                .orElse(new AttackOtherPlayer(attackPower)));
         return spaceship;
     }
 

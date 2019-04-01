@@ -1,11 +1,19 @@
 package pl.derezinski.card_game.game_elements;
 
+import pl.derezinski.card_game.game_elements.behaviours.AttackBehaviour;
+
 import java.util.Objects;
 
 public class Spaceship extends CardWithResourcesCost {
 
     private int attackPower;
     private int defencePower;
+    private AttackBehaviour attackBehaviour;
+    private Spaceship spaceship;           // TODO - tu będzie przechowywana referencja do statku przeciwnika
+
+    public void performAttack() {
+        attackBehaviour.attack();
+    }
 
     public int getAttackPower() {
         return attackPower;
@@ -21,6 +29,10 @@ public class Spaceship extends CardWithResourcesCost {
 
     public void setDefencePower(int defencePower) {
         this.defencePower = defencePower;
+    }
+
+    public void setAttackBehaviour(AttackBehaviour attackBehaviour) {
+        this.attackBehaviour = attackBehaviour;
     }
 
     @Override
