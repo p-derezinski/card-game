@@ -1,22 +1,53 @@
 package pl.derezinski.card_game;
 
+import pl.derezinski.card_game.commands.Command;
+import pl.derezinski.card_game.commands.DisplayCardsInDeckCommand;
+import pl.derezinski.card_game.commands.DisplayCardsInHandCommand;
 import pl.derezinski.card_game.game_elements.*;
 import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
 import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaseShipDefence;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Player player = new Player();
+        Scanner scanner = new Scanner(System.in);
+        Map<String, Command> commands = new HashMap<>();
+        addCommandsToTheHashMap(commands, player);
 
         addCardsToThePlayersDeck(player);
+        //checkingBehaviourOfSomeCards(player);
 
         System.out.println("-----------------------\nCards before shuffle");
-        player.getDeck().forEach(System.out::println);
+        Command command = commands.get("deck");
+        command.execute();
 
+        // potasowanie talii
+        Collections.shuffle(player.getDeck());
+        System.out.println("-----------------------\nCards after shuffle");
+        command.execute();
+
+        // pobranie siedmiu kart do ręki gracza
+        for (int i = 0; i < 7; i++) {
+            player.getHand().add(player.getDeck().remove(0));
+        }
+        System.out.println("-----------------------\nCards in hand:");
+        command = commands.get("hand");
+        command.execute();
+
+        System.out.println("-----------------------\nCards in deck:");
+        command = commands.get("deck");
+        command.execute();
+
+    }
+
+    private static void checkingBehaviourOfSomeCards(Player player) {
         // sprawdzenie zachowania różnych kart
         System.out.println("-----------------------\nTechnology cards");
         Technology technology_1 = (Technology) player.getDeck().get(26);
@@ -32,22 +63,12 @@ public class Main {
         Spaceship spaceship_1 = (Spaceship) player.getDeck().get(25);
         System.out.println(spaceship_1);
         spaceship_1.performAttack();
+    }
 
-        // potasowanie talii
-        Collections.shuffle(player.getDeck());
-        System.out.println("-----------------------\nCards after shuffle");
-        player.getDeck().forEach(System.out::println);
-
-        // pobranie siedmiu kart do ręki gracza
-        for (int i = 0; i < 7; i++) {
-            player.getHand().add(player.getDeck().remove(0));
-        }
-        System.out.println("-----------------------\nCards in hand:");
-        player.getHand().forEach(System.out::println);
-
-        System.out.println("-----------------------\nCards in deck:");
-        player.getDeck().forEach(System.out::println);
-
+    private static void addCommandsToTheHashMap(Map<String, Command> commands, Player player) {
+        commands.put("exit", () -> System.exit(0));
+        commands.put("hand", new DisplayCardsInHandCommand(player));
+        commands.put("deck", new DisplayCardsInDeckCommand(player));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {
