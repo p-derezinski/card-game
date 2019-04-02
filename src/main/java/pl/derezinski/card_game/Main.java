@@ -1,8 +1,6 @@
 package pl.derezinski.card_game;
 
-import pl.derezinski.card_game.commands.Command;
-import pl.derezinski.card_game.commands.DisplayCardsInDeckCommand;
-import pl.derezinski.card_game.commands.DisplayCardsInHandCommand;
+import pl.derezinski.card_game.commands.*;
 import pl.derezinski.card_game.game_elements.*;
 import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
 import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaseShipDefence;
@@ -41,6 +39,22 @@ public class Main {
         command = commands.get("hand");
         command.execute();
 
+        System.out.println("-----------------------\nCards in table:");
+        command = commands.get("table");
+        command.execute();
+
+        System.out.println("-----------------------\nPlaying a card:");
+        command = commands.get("play card");
+        command.execute();
+
+        System.out.println("-----------------------\nCards in hand:");
+        command = commands.get("hand");
+        command.execute();
+
+        System.out.println("-----------------------\nCards in table:");
+        command = commands.get("table");
+        command.execute();
+
         System.out.println("-----------------------\nCards in deck:");
         command = commands.get("deck");
         command.execute();
@@ -69,6 +83,8 @@ public class Main {
         commands.put("exit", () -> System.exit(0));
         commands.put("hand", new DisplayCardsInHandCommand(player));
         commands.put("deck", new DisplayCardsInDeckCommand(player));
+        commands.put("table", new DisplayCardsInTableCommand(player));
+        commands.put("play card", new CardFromHandToTableCommand(player));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {
