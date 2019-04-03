@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class CardFromHandToTableCommand implements Command {
 
     private final Player player;
+    private final String COMMAND_DESCRIPTION = "allows to play a card from the hand to the table";
 
     public CardFromHandToTableCommand(Player player) {
         this.player = player;
@@ -17,7 +18,8 @@ public class CardFromHandToTableCommand implements Command {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a card to play:");
+        System.out.println("-----------------------\nPlaying a card:");
+        System.out.print("Choose a card to play: ");
         String chosenCard = scanner.nextLine();
         Optional<Card> card = player.getHand().stream()
                 .filter(c -> c.getCardName().equals(chosenCard))
@@ -29,5 +31,10 @@ public class CardFromHandToTableCommand implements Command {
         }
 
         //player.getTable().add(player.getHand().remove(0));
+    }
+
+    @Override
+    public String toString() {
+        return COMMAND_DESCRIPTION;
     }
 }

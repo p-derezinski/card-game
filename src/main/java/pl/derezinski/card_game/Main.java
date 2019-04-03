@@ -5,10 +5,7 @@ import pl.derezinski.card_game.game_elements.*;
 import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
 import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaseShipDefence;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -21,44 +18,31 @@ public class Main {
 
         addCardsToThePlayersDeck(player);
         //checkingBehaviourOfSomeCards(player);
-
-        System.out.println("-----------------------\nCards before shuffle");
-        Command command = commands.get("deck");
-        command.execute();
-
-        // potasowanie talii
         Collections.shuffle(player.getDeck());
-        System.out.println("-----------------------\nCards after shuffle");
-        command.execute();
 
         // pobranie siedmiu kart do ręki gracza
         for (int i = 0; i < 7; i++) {
             player.getHand().add(player.getDeck().remove(0));
         }
-        System.out.println("-----------------------\nCards in hand:");
-        command = commands.get("hand");
-        command.execute();
 
-        System.out.println("-----------------------\nCards in table:");
-        command = commands.get("table");
+        System.out.println("=========================\n====  THE CARD GAME  ====\n=========================");
+        Command command = commands.get("print");
         command.execute();
+        while (true) {
+            System.out.print("-----------------------\nChoose a command: ");
+            String commandName = scanner.nextLine();
+            command = commands.get(commandName);
+            Optional.ofNullable(command).ifPresent(Command::execute);
+        }
 
-        System.out.println("-----------------------\nPlaying a card:");
-        command = commands.get("play card");
-        command.execute();
-
-        System.out.println("-----------------------\nCards in hand:");
-        command = commands.get("hand");
-        command.execute();
-
-        System.out.println("-----------------------\nCards in table:");
-        command = commands.get("table");
-        command.execute();
-
-        System.out.println("-----------------------\nCards in deck:");
-        command = commands.get("deck");
-        command.execute();
-
+//        System.out.println("-----------------------\nCards before shuffle");
+//        Command command = commands.get("deck");
+//        command.execute();
+//
+//        // potasowanie talii
+//        Collections.shuffle(player.getDeck());
+//        System.out.println("-----------------------\nCards after shuffle");
+//        command.execute();
     }
 
     private static void checkingBehaviourOfSomeCards(Player player) {
@@ -80,11 +64,12 @@ public class Main {
     }
 
     private static void addCommandsToTheHashMap(Map<String, Command> commands, Player player) {
-        commands.put("exit", () -> System.exit(0));
+        //commands.put("exit", () -> System.exit(0));
         commands.put("hand", new DisplayCardsInHandCommand(player));
         commands.put("deck", new DisplayCardsInDeckCommand(player));
         commands.put("table", new DisplayCardsInTableCommand(player));
         commands.put("play card", new CardFromHandToTableCommand(player));
+        commands.put("print", new PrintAvailableCommandsCommand(player, commands));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {
