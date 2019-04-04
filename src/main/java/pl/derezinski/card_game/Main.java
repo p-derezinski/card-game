@@ -29,10 +29,13 @@ public class Main {
         Command command = commands.get("print");
         command.execute();
         while (true) {
-            System.out.print("-----------------------\nChoose a command: ");
-            String commandName = scanner.nextLine();
-            command = commands.get(commandName);
-            Optional.ofNullable(command).ifPresent(Command::execute);
+            player.setCounters(new Counters());
+            while (!player.getCounters().isEndOfTurn()) {
+                System.out.print("-----------------------\nChoose a command: ");
+                String commandName = scanner.nextLine();
+                command = commands.get(commandName);
+                Optional.ofNullable(command).ifPresent(Command::execute);
+            }
         }
 
 //        System.out.println("-----------------------\nCards before shuffle");
@@ -70,6 +73,7 @@ public class Main {
         commands.put("table", new DisplayCardsInTableCommand(player));
         commands.put("play card", new CardFromHandToTableCommand(player));
         commands.put("print", new PrintAvailableCommandsCommand(player, commands));
+        commands.put("end", new EndTheTurnCommand(player));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {

@@ -16,6 +16,7 @@ public class Player {
     private List<Card> hand = new ArrayList<>();
     private List<Card> table = new ArrayList<>();
     private List<Card> graveyard = new ArrayList<>();
+    private Counters counters;
 
     public String getPlayerName() {
         return playerName;
@@ -103,5 +104,13 @@ public class Player {
 
     public void setGraveyard(List<Card> graveyard) {
         this.graveyard = graveyard;
+    }
+
+    public Counters getCounters() {
+        return counters;
+    }
+
+    public void setCounters(Counters counters) {
+        this.counters = counters;
     }
 }
