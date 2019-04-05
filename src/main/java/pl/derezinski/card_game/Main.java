@@ -11,39 +11,60 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Player player = new Player();
+        Player player_1 = new Player();
+        Player player_2 = new Player();
+        player_1.setOpponent(player_2);
+        player_2.setOpponent(player_1);
         Scanner scanner = new Scanner(System.in);
-        Map<String, Command> commands = new HashMap<>();
-        addCommandsToTheHashMap(commands, player);
+        Map<String, Command> commands_1 = new HashMap<>();
+        Map<String, Command> commands_2 = new HashMap<>();
+        addCommandsToTheHashMap(commands_1, player_1);
+        addCommandsToTheHashMap(commands_2, player_2);
 
-        addCardsToThePlayersDeck(player);
-        //checkingBehaviourOfSomeCards(player);
-        Collections.shuffle(player.getDeck());
+        addCardsToThePlayersDeck(player_1);
+        addCardsToThePlayersDeck(player_2);
+        //checkingBehaviourOfSomeCards(player_1);
+        Collections.shuffle(player_1.getDeck());
+        Collections.shuffle(player_2.getDeck());
 
-        // pobranie siedmiu kart do ręki gracza
-        for (int i = 0; i < 7; i++) {
-            player.getHand().add(player.getDeck().remove(0));
+        // pobranie sześciu kart do ręki gracza (siódma będzie dodana na początku pierwszej tury)
+        for (int i = 0; i < 6; i++) {
+            player_1.getHand().add(player_1.getDeck().remove(0));
+            player_2.getHand().add(player_2.getDeck().remove(0));
         }
 
         System.out.println("=========================\n====  THE CARD GAME  ====\n=========================");
-        Command command = commands.get("print");
-        command.execute();
+        Command initialCommand = new PrintAvailableCommandsCommand(commands_1);
+        initialCommand.execute();
         while (true) {
-            player.setCounters(new Counters());
-            while (!player.getCounters().isEndOfTurn()) {
+            player_1.setCounters(new Counters());
+            player_1.getHand().add(player_1.getDeck().remove(0));
+            System.out.println("-----------------------\n\t\t\t\t-->  Player 1, it is your turn  <--");
+            while (!player_1.getCounters().isEndOfTurn()) {
                 System.out.print("-----------------------\nChoose a command: ");
                 String commandName = scanner.nextLine();
-                command = commands.get(commandName);
+                Command command = commands_1.get(commandName);
+                Optional.ofNullable(command).ifPresent(Command::execute);
+            }
+            player_2.setCounters(new Counters());
+            player_2.getHand().add(player_2.getDeck().remove(0));
+            System.out.println("-----------------------\n\t\t\t\t-->  Player 2, it is your turn  <--");
+            while (!player_2.getCounters().isEndOfTurn()) {
+                System.out.print("-----------------------\nChoose a command: ");
+                String commandName = scanner.nextLine();
+                Command command = commands_2.get(commandName);
                 Optional.ofNullable(command).ifPresent(Command::execute);
             }
         }
 
+        // TODO - użyć metody increasePlayerColorResources() po zagraniu karty Resources i sprawdzać koszt kart
+
 //        System.out.println("-----------------------\nCards before shuffle");
-//        Command command = commands.get("deck");
+//        Command command = commands_1.get("deck");
 //        command.execute();
 //
 //        // potasowanie talii
-//        Collections.shuffle(player.getDeck());
+//        Collections.shuffle(player_1.getDeck());
 //        System.out.println("-----------------------\nCards after shuffle");
 //        command.execute();
     }
@@ -72,8 +93,9 @@ public class Main {
         commands.put("deck", new DisplayCardsInDeckCommand(player));
         commands.put("table", new DisplayCardsInTableCommand(player));
         commands.put("play card", new CardFromHandToTableCommand(player));
-        commands.put("print", new PrintAvailableCommandsCommand(player, commands));
+        commands.put("print", new PrintAvailableCommandsCommand(commands));
         commands.put("end", new EndTheTurnCommand(player));
+        commands.put("stats", new StatisticsCommand(player));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {

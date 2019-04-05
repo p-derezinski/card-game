@@ -6,12 +6,12 @@ import java.util.Map;
 
 public class PrintAvailableCommandsCommand implements Command {
 
-    private final Player player;
+    //private final Player player;
     private final String COMMAND_DESCRIPTION = "displays available commands";
     private final Map<String, Command> commands;
 
-    public PrintAvailableCommandsCommand(Player player, Map<String, Command> commands) {
-        this.player = player;
+    public PrintAvailableCommandsCommand(Map<String, Command> commands) {
+        //this.player = player;
         this.commands = commands;
     }
 
