@@ -27,6 +27,7 @@ public class Resources extends Card {
         } else if (color.equals(Color.GREEN)) {
             player.setGreenResources(player.getGreenResources() + 1);
         }
+        player.setTotalResources(player.getTotalResources() + 1);
     }
 
     @Override
