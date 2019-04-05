@@ -4,6 +4,7 @@ public class Counters {
 
     private int numberOfResourcesPerTurn = 1;
     private boolean isEndOfTurn = false;
+    private boolean hasCardWithResourcesCostBeenPlayed = false;
 
     public int getNumberOfResourcesPerTurn() {
         return numberOfResourcesPerTurn;
@@ -19,5 +20,13 @@ public class Counters {
 
     public void setEndOfTurn(boolean endOfTurn) {
         isEndOfTurn = endOfTurn;
+    }
+
+    public boolean isHasCardWithResourcesCostBeenPlayed() {
+        return hasCardWithResourcesCostBeenPlayed;
+    }
+
+    public void setHasCardWithResourcesCostBeenPlayed(boolean hasCardWithResourcesCostBeenPlayed) {
+        this.hasCardWithResourcesCostBeenPlayed = hasCardWithResourcesCostBeenPlayed;
     }
 }

@@ -11,13 +11,14 @@ public class Player {
     private int orangeResources = 0;
     private int yellowResources = 0;
     private int greenResources = 0;
-    private int totalResources = brownResources + orangeResources + yellowResources + greenResources;
+    private int totalResources = 0;
     private List<Card> deck = new ArrayList<>(60);
     private List<Card> hand = new ArrayList<>();
     private List<Card> table = new ArrayList<>();
     private List<Card> graveyard = new ArrayList<>();
     private Counters counters;
     private Player opponent;
+    private ResourcesCounters resourcesCounters;
 
     public String getPlayerName() {
         return playerName;
@@ -121,5 +122,13 @@ public class Player {
 
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
+    }
+
+    public ResourcesCounters getResourcesCounters() {
+        return resourcesCounters;
+    }
+
+    public void setResourcesCounters(ResourcesCounters resourcesCounters) {
+        this.resourcesCounters = resourcesCounters;
     }
 }

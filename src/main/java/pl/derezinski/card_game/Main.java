@@ -38,6 +38,7 @@ public class Main {
         initialCommand.execute();
         while (true) {
             player_1.setCounters(new Counters());
+            player_1.setResourcesCounters(new ResourcesCounters(player_1));
             player_1.getHand().add(player_1.getDeck().remove(0));
             System.out.println("-----------------------\n\t\t\t\t-->  Player 1, it is your turn  <--");
             while (!player_1.getCounters().isEndOfTurn()) {
@@ -45,8 +46,10 @@ public class Main {
                 String commandName = scanner.nextLine();
                 Command command = commands_1.get(commandName);
                 Optional.ofNullable(command).ifPresent(Command::execute);
+                isGameOver(player_1, player_2);
             }
             player_2.setCounters(new Counters());
+            player_2.setResourcesCounters(new ResourcesCounters(player_2));
             player_2.getHand().add(player_2.getDeck().remove(0));
             System.out.println("-----------------------\n\t\t\t\t-->  Player 2, it is your turn  <--");
             while (!player_2.getCounters().isEndOfTurn()) {
@@ -54,10 +57,9 @@ public class Main {
                 String commandName = scanner.nextLine();
                 Command command = commands_2.get(commandName);
                 Optional.ofNullable(command).ifPresent(Command::execute);
+                isGameOver(player_1, player_2);
             }
         }
-
-        // TODO - użyć metody increasePlayerColorResources() po zagraniu karty Resources i sprawdzać koszt kart
 
 //        System.out.println("-----------------------\nCards before shuffle");
 //        Command command = commands_1.get("deck");
@@ -67,6 +69,28 @@ public class Main {
 //        Collections.shuffle(player_1.getDeck());
 //        System.out.println("-----------------------\nCards after shuffle");
 //        command.execute();
+    }
+
+    private static void isGameOver(Player player_1, Player player_2) {
+        if (player_1.getLifeCount() <= 0) {
+            System.out.println("-----------------------\n\t\t\t\t-->  GAME OVER - Player 2 is the winner!  <--");
+            System.exit(0);
+        } else if (player_2.getLifeCount() <= 0) {
+            System.out.println("-----------------------\n\t\t\t\t-->  GAME OVER - Player 1 is the winner!  <--");
+            System.exit(0);
+        }
+    }
+
+    private static void addCommandsToTheHashMap(Map<String, Command> commands, Player player) {
+        //commands.put("exit", () -> System.exit(0));
+        commands.put("hand", new DisplayCardsInHandCommand(player));
+        commands.put("deck", new DisplayCardsInDeckCommand(player));
+        commands.put("table", new DisplayCardsInTableCommand(player));
+        commands.put("play card", new CardFromHandToTableCommand(player));
+        commands.put("print", new PrintAvailableCommandsCommand(commands));
+        commands.put("end", new EndTheTurnCommand(player));
+        commands.put("stats", new StatisticsCommand(player));
+        commands.put("end game", new EndTheGameCommand(player));
     }
 
     private static void checkingBehaviourOfSomeCards(Player player) {
@@ -85,17 +109,6 @@ public class Main {
         Spaceship spaceship_1 = (Spaceship) player.getDeck().get(25);
         System.out.println(spaceship_1);
         spaceship_1.performAttack();
-    }
-
-    private static void addCommandsToTheHashMap(Map<String, Command> commands, Player player) {
-        //commands.put("exit", () -> System.exit(0));
-        commands.put("hand", new DisplayCardsInHandCommand(player));
-        commands.put("deck", new DisplayCardsInDeckCommand(player));
-        commands.put("table", new DisplayCardsInTableCommand(player));
-        commands.put("play card", new CardFromHandToTableCommand(player));
-        commands.put("print", new PrintAvailableCommandsCommand(commands));
-        commands.put("end", new EndTheTurnCommand(player));
-        commands.put("stats", new StatisticsCommand(player));
     }
 
     private static void addCardsToThePlayersDeck(Player player) {
