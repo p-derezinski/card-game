@@ -1,8 +1,11 @@
 package pl.derezinski.card_game.game_elements.behaviours;
 
+import pl.derezinski.card_game.game_elements.Player;
+
 public class AttackOtherPlayer implements AttackBehaviour {
 
     private int attackPower;
+    private Player opponent;
 
     public AttackOtherPlayer(int attackPower) {
         this.attackPower = attackPower;
@@ -11,7 +14,8 @@ public class AttackOtherPlayer implements AttackBehaviour {
     @Override
     public void attack() {
         // TODO
-        System.out.println("Attacking another player. The attacked player loses " + attackPower + " life points.");
+        System.out.println("Attacking the opponent. The opponent loses " + attackPower + " life points.");
+        opponent.setLifeCount(opponent.getLifeCount() - attackPower);
     }
 
     public int getAttackPower() {
@@ -20,5 +24,13 @@ public class AttackOtherPlayer implements AttackBehaviour {
 
     public void setAttackPower(int attackPower) {
         this.attackPower = attackPower;
+    }
+
+    public Player getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
     }
 }

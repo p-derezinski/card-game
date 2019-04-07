@@ -13,9 +13,10 @@ public class DisplayCardsInTableCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("-----------------------\nCards in table:");
+        System.out.println("-----------------------\nCards in the table:");
         player.getTable().forEach(System.out::println);
     }
+
     @Override
     public String toString() {
         return COMMAND_DESCRIPTION;

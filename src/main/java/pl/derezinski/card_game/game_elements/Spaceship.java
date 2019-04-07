@@ -31,6 +31,10 @@ public class Spaceship extends CardWithResourcesCost {
         this.defencePower = defencePower;
     }
 
+    public AttackBehaviour getAttackBehaviour() {
+        return attackBehaviour;
+    }
+
     public void setAttackBehaviour(AttackBehaviour attackBehaviour) {
         this.attackBehaviour = attackBehaviour;
     }

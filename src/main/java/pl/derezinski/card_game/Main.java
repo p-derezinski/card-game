@@ -18,8 +18,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Map<String, Command> commands_1 = new HashMap<>();
         Map<String, Command> commands_2 = new HashMap<>();
-        addCommandsToTheHashMap(commands_1, player_1);
-        addCommandsToTheHashMap(commands_2, player_2);
+        addCommandsToTheHashMap(commands_1, player_1, player_2);
+        addCommandsToTheHashMap(commands_2, player_2, player_1);
 
         addCardsToThePlayersDeck(player_1);
         addCardsToThePlayersDeck(player_2);
@@ -61,6 +61,9 @@ public class Main {
             }
         }
 
+        // TODO - dodać wyświetlenie komunikatu dla playera o ruchach przeciwnika w jego poprzedniej turze
+        // TODO - dodać dodatkowe entery, żeby playerzy nie widzieli nawzajem swoich kart
+
 //        System.out.println("-----------------------\nCards before shuffle");
 //        Command command = commands_1.get("deck");
 //        command.execute();
@@ -81,16 +84,18 @@ public class Main {
         }
     }
 
-    private static void addCommandsToTheHashMap(Map<String, Command> commands, Player player) {
+    private static void addCommandsToTheHashMap(Map<String, Command> commands, Player playerA, Player playerB) {
         //commands.put("exit", () -> System.exit(0));
-        commands.put("hand", new DisplayCardsInHandCommand(player));
-        commands.put("deck", new DisplayCardsInDeckCommand(player));
-        commands.put("table", new DisplayCardsInTableCommand(player));
-        commands.put("play card", new CardFromHandToTableCommand(player));
+        commands.put("hand", new DisplayCardsInHandCommand(playerA));
+        commands.put("deck", new DisplayCardsInDeckCommand(playerA));
+        commands.put("table", new DisplayCardsInTableCommand(playerA));
+        commands.put("play card", new CardFromHandToTableCommand(playerA));
         commands.put("print", new PrintAvailableCommandsCommand(commands));
-        commands.put("end", new EndTheTurnCommand(player));
-        commands.put("stats", new StatisticsCommand(player));
-        commands.put("end game", new EndTheGameCommand(player));
+        commands.put("end", new EndTheTurnCommand(playerA));
+        commands.put("stats", new StatisticsCommand(playerA));
+        commands.put("end game", new EndTheGameCommand(playerA));
+        commands.put("attack", new ActivateAttackBehaviourCommand(playerA, playerB));
+        commands.put("opponent table", new DisplayCardsInOpponentTableCommand(playerB));
     }
 
     private static void checkingBehaviourOfSomeCards(Player player) {
