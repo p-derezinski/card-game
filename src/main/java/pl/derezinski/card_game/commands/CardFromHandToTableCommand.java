@@ -50,14 +50,20 @@ public class CardFromHandToTableCommand implements Command {
                     player.getResourcesCounters().getTotalResources() < total) {
                     System.out.println("You don't have enough resources to play this card.");
                 } else {
-                    card.ifPresent(c -> player.getTable().add(player.getHand().remove(player.getHand().indexOf(c))));
-                    card.ifPresent(c -> System.out.println("Card '" + c.getCardName() + "' entered the table."));
                     player.getResourcesCounters().setBrownResources(player.getResourcesCounters().getBrownResources() - brown);
                     player.getResourcesCounters().setOrangeResources(player.getResourcesCounters().getOrangeResources() - orange);
                     player.getResourcesCounters().setYellowResources(player.getResourcesCounters().getYellowResources() - yellow);
                     player.getResourcesCounters().setGreenResources(player.getResourcesCounters().getGreenResources() - green);
                     player.getResourcesCounters().setTotalResources(player.getResourcesCounters().getTotalResources() - total);
                     player.getCounters().setHasCardWithResourcesCostBeenPlayed(true);
+                    if (card.get() instanceof Action) {
+                        card.ifPresent(c -> System.out.print("Card '" + c.getCardName() + "' was played. "));
+                        ((Action) card.get()).performAction();
+                        card.ifPresent(c -> player.getGraveyard().add(player.getHand().remove(player.getHand().indexOf(c))));
+                    } else {
+                        card.ifPresent(c -> player.getTable().add(player.getHand().remove(player.getHand().indexOf(c))));
+                        card.ifPresent(c -> System.out.println("Card '" + c.getCardName() + "' entered the table."));
+                    }
                 }
             }
         } else {

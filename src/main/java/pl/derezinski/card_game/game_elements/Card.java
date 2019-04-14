@@ -6,6 +6,7 @@ public abstract class Card {
 
     protected String cardName;
     protected String cardDescription;
+    protected Player player;
 
     public String getCardName() {
         return cardName;
@@ -21,6 +22,14 @@ public abstract class Card {
 
     public void setCardDescription(String cardDescription) {
         this.cardDescription = cardDescription;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @Override

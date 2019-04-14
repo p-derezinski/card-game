@@ -4,6 +4,8 @@ import pl.derezinski.card_game.commands.*;
 import pl.derezinski.card_game.game_elements.*;
 import pl.derezinski.card_game.game_elements.behaviours.AttackOtherPlayer;
 import pl.derezinski.card_game.game_elements.behaviours.DefenceIncreaseShipDefence;
+import pl.derezinski.card_game.game_elements.behaviours.OtherDrawCards;
+import pl.derezinski.card_game.game_elements.behaviours.OtherSpyOpponentsHand;
 
 import java.util.*;
 
@@ -23,6 +25,12 @@ public class Main {
 
         addCardsToThePlayersDeck(player_1);
         addCardsToThePlayersDeck(player_2);
+        for (Card card : player_1.getDeck()) {
+            card.setPlayer(player_1);
+        }
+        for (Card card : player_2.getDeck()) {
+            card.setPlayer(player_2);
+        }
         //checkingBehaviourOfSomeCards(player_1);
         Collections.shuffle(player_1.getDeck());
         Collections.shuffle(player_2.getDeck());
@@ -89,6 +97,7 @@ public class Main {
         commands.put("hand", new DisplayCardsInHandCommand(playerA));
         commands.put("deck", new DisplayCardsInDeckCommand(playerA));
         commands.put("table", new DisplayCardsInTableCommand(playerA));
+        commands.put("graveyard", new DisplayCardsInGraveyardCommand(playerA));
         commands.put("play card", new CardFromHandToTableCommand(playerA));
         commands.put("print", new PrintAvailableCommandsCommand(commands));
         commands.put("end", new EndTheTurnCommand(playerA));
@@ -96,6 +105,7 @@ public class Main {
         commands.put("end game", new EndTheGameCommand(playerA));
         commands.put("attack", new ActivateAttackBehaviourCommand(playerA, playerB));
         commands.put("opponent table", new DisplayCardsInOpponentTableCommand(playerB));
+        commands.put("rules", new PrintGameRulesCommand());
     }
 
     private static void checkingBehaviourOfSomeCards(Player player) {
@@ -123,6 +133,15 @@ public class Main {
                 .color(Color.BROWN)
                 .build());
         player.getDeck().add(new ResourcesBuilder()
+                .cardName("Factory")
+                .cardDescription("Provides mass production of all necessary stuff.")
+                .color(Color.BROWN)
+                .build());
+        player.getDeck().add(new ResourcesBuilder()
+                .cardName("Shipyard")
+                .color(Color.BROWN)
+                .build());
+        player.getDeck().add(new ResourcesBuilder()
                 .cardName("Shipyard")
                 .color(Color.BROWN)
                 .build());
@@ -146,6 +165,14 @@ public class Main {
                 .build());
         player.getDeck().add(new ResourcesBuilder()
                 .cardName("Farm")
+                .color(Color.GREEN)
+                .build());
+        player.getDeck().add(new ResourcesBuilder()
+                .cardName("Farm")
+                .color(Color.GREEN)
+                .build());
+        player.getDeck().add(new ResourcesBuilder()
+                .cardName("Training camp")
                 .color(Color.GREEN)
                 .build());
         player.getDeck().add(new ResourcesBuilder()
@@ -300,6 +327,63 @@ public class Main {
                 .greenResourcesCost(1)
                 .totalResourcesCost(1)
                 .defenceBehaviour(new DefenceIncreaseShipDefence())
+                .build());
+
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Exploration")
+                .cardDescription("You can draw 2 cards.")
+                .brownResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherDrawCards(2))
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Exploration")
+                .cardDescription("You can draw 2 cards.")
+                .brownResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherDrawCards(2))
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Big Exploration")
+                .cardDescription("You can draw 3 cards.")
+                .brownResourcesCost(1)
+                .totalResourcesCost(2)
+                .otherBehaviour(new OtherDrawCards(3))
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Big Exploration")
+                .cardDescription("You can draw 3 cards.")
+                .brownResourcesCost(1)
+                .totalResourcesCost(2)
+                .otherBehaviour(new OtherDrawCards(3))
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Espionage")
+                .cardDescription("You can look into your opponent's hand.")
+                .greenResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherSpyOpponentsHand())
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Espionage")
+                .cardDescription("You can look into your opponent's hand.")
+                .greenResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherSpyOpponentsHand())
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Espionage")
+                .cardDescription("You can look into your opponent's hand.")
+                .greenResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherSpyOpponentsHand())
+                .build());
+        player.getDeck().add(new ActionBuilder()
+                .cardName("Espionage")
+                .cardDescription("You can look into your opponent's hand.")
+                .greenResourcesCost(1)
+                .totalResourcesCost(1)
+                .otherBehaviour(new OtherSpyOpponentsHand())
                 .build());
 
         // TODO - dodać kolejne karty

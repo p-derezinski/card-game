@@ -1,36 +1,20 @@
 package pl.derezinski.card_game.game_elements;
 
-import pl.derezinski.card_game.game_elements.behaviours.AttackBehaviour;
-import pl.derezinski.card_game.game_elements.behaviours.DefenceBehaviour;
 import pl.derezinski.card_game.game_elements.behaviours.OtherBehaviour;
 
-public class Technology extends CardWithResourcesCost {
+public class Action extends CardWithResourcesCost{
 
-    private AttackBehaviour attackBehaviour;
-    private DefenceBehaviour defenceBehaviour;
     private OtherBehaviour otherBehaviour;
 
-    Technology() {
-    }
-
-    public void performAttack() {
-        attackBehaviour.attack();
-    }
-
-    public void performDefence() {
-        defenceBehaviour.defence();
+    public Action() {
     }
 
     public void performAction() {
         otherBehaviour.action(player);
     }
 
-    public void setAttackBehaviour(AttackBehaviour attackBehaviour) {
-        this.attackBehaviour = attackBehaviour;
-    }
-
-    public void setDefenceBehaviour(DefenceBehaviour defenceBehaviour) {
-        this.defenceBehaviour = defenceBehaviour;
+    public OtherBehaviour getOtherBehaviour() {
+        return otherBehaviour;
     }
 
     public void setOtherBehaviour(OtherBehaviour otherBehaviour) {
@@ -41,7 +25,7 @@ public class Technology extends CardWithResourcesCost {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("-> ").append(cardName).append("\n");
-        sb.append("\ttype: TECHNOLOGY, ");
+        sb.append("\ttype: ACTION, ");
         if (brownResourcesCost > 0) {
             sb.append("BROWN resources cost: ").append(brownResourcesCost).append(", ");
         }
